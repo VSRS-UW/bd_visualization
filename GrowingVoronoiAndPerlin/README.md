@@ -1,7 +1,7 @@
 # Growing Voronoi Diagram and Perlin Noise Loop
 This visualization is created using the following three characteristics:
   * Propogation of cells overtime (currently out from the center of the visualization)
-  * Jittered Voronoi diagram - points act as centers of Voronoi cells
+  * Voronoi diagram - points act as centers of Voronoi cells
   * Perlin Noise Loop - gives the outer shape of the organism, this loops build each frame, no decay
 
 ### Variables and constants
