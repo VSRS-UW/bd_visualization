@@ -21,12 +21,12 @@ Set at the top of the sketch and can be changed to control elicit different visu
 
   #### Perlin Noise Loop
   * radiusDivisions : number of points used to create perlin noise loop
-  * perlinVariability : how much variation there is in the perlin noise loop (larger numbers correspond with less variation, NOTE: variation builds over time)
+  * perlinVariability : how much variation there is in the perlin noise loop (larger numbers correspond with less variation, **NOTE**: variation builds over time)
   * startingRadius : starting radius of the perlin noise loop
   * minRadiusAddition : minimum expansion of radius each frame
   * maxRadiusAddition = maximum expansion of radius each frame
   * previousRadius : list of previous radius distances (not meant to be changed by user)
 
 
-This a visualization is an animation.
+**This a visualization is an animation.**
 
