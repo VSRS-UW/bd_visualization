@@ -4,7 +4,9 @@ This visualization is created using the following three characteristics:
   * Jittered Voronoi diagram - points act as centers of Voronoi cells
   * Perlin Noise Loop - gives the outer shape of the organism, this loops build each frame, no decay
 
-Variables and constants are set at the top of the sketch and can be changed to control elicit different visualizations:
+### Variables and constants
+Set at the top of the sketch and can be changed to control elicit different visualizations:
+
   #### General
   * absoluteFrame : running count of what frame animation is on (not meant to be changed by user)
   * growthFrames : how many frames the visualization should grow for
