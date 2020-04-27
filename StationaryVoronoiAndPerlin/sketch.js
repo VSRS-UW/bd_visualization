@@ -15,13 +15,14 @@ function randomG(v, range) {
 function resetCells() {
     // Get new number of cells
     let numCells = controls.filter(d => d.id == "numberOfCells")[0].control.value();
+    let cellDist = controls.filter(d => d.id == "cellDistribution")[0].control.value();
 
     voronoiClearSites()
     cells = [];
     // create center points of cells
 
     for (var cell = 0; cell < numCells; cell++) {
-        cells.push([int(randomG(5, width)), int(randomG(5, height))]);
+        cells.push([int(randomG(cellDist, width)), int(randomG(cellDist, height))]);
     }
 
     // pass center points to voronoi
