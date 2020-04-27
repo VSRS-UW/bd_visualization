@@ -8,7 +8,7 @@ const controlSettings = [
         label: "Maximum Radius", id: "maxRadius", minVal: 100, maxVal: 500, value: 300, step: 1, update: () => { }
     },
     {
-        label: "Radius Devisions", id: "radiusDivisions", minVal: 3, maxVal: 2000, value: 2000, step: 1, update: () => {
+        label: "Radius Devisions", id: "radiusDivisions", minVal: 3, maxVal: 2000, value: 100, step: 1, update: () => {
             clear();
         }
     },
