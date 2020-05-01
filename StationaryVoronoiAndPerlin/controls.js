@@ -2,30 +2,38 @@
 // Settings for the controls we'll build
 const controlSettings = [
     {
-        label: "Minimum Radius", id: "minRadius", minVal: 2, maxVal: 200, value: 100, step: 1, update: () => { }
+        category: "Border Outline",
+        sliders: [{
+            label: "Minimum Radius", id: "minRadius", minVal: 2, maxVal: 200, value: 100, step: 1, update: () => redraw()
+        },
+        {
+            label: "Maximum Radius", id: "maxRadius", minVal: 100, maxVal: 500, value: 300, step: 1, update: () => redraw()
+        },
+        {
+            label: "Radius Divisions", id: "radiusDivisions", minVal: 3, maxVal: 2000, value: 100, step: 1, update: () => {
+                redraw();
+            }
+        },
+        {
+            label: "Perlin Variablility", id: "perlinVariability", minVal: 1, maxVal: 100, value: 25, step: 1, update: () => {
+                redraw();
+            }
+        }]
     },
     {
-        label: "Maximum Radius", id: "maxRadius", minVal: 100, maxVal: 500, value: 300, step: 1, update: () => { }
-    },
-    {
-        label: "Radius Divisions", id: "radiusDivisions", minVal: 3, maxVal: 2000, value: 100, step: 1, update: () => {
-            clear();
-        }
-    },
-    {
-        label: "Perlin Variablility", id: "perlinVariability", minVal: 1, maxVal: 100, value: 25, step: 1, update: () => {
-            clear();
-        }
-    },
-    {
-        label: "Number of Cells", id: "numberOfCells", minVal: 1, maxVal: 400, value: 100, step: 1, update: () => {
-            resetCells();
-        }
-    },
-    {
-        label: "Distrubtion of Cells", id: "cellDistribution", minVal: 1, maxVal: 25, value: 5, step: 1, update: () => {
-            resetCells();
-        }
+        category: "Cells",
+        sliders: [
+            {
+                label: "Number of Cells", id: "numberOfCells", minVal: 1, maxVal: 400, value: 100, step: 1, update: () => {
+                    resetCells();
+                }
+            },
+            {
+                label: "Distrubtion of Cells", id: "cellDistribution", minVal: 1, maxVal: 25, value: 5, step: 1, update: () => {
+                    resetCells();
+                }
+            }
+        ]
     }
 ];
 
@@ -47,11 +55,19 @@ function makeControls() {
     let controlWrapper = createDiv().id("control-wrapper");
     let controlHeader = createDiv("<h2>Controls</h2>");
     controlHeader.parent(controlWrapper);
-    return controlSettings.map(d => {
-        d.parent = controlWrapper;
-        return {
-            id: d.id,
-            control: makeSlider(d)
-        }
+    let controls = []
+    controlSettings.map(category => {
+        createDiv("<hr>").parent(controlWrapper)
+        let categoryHeader = createDiv(`<h5>${category.category}</h5>`);
+        categoryHeader.parent(controlWrapper)
+
+        category.sliders.map(d => {
+            d.parent = controlWrapper;
+            controls.push({
+                id: d.id,
+                control: makeSlider(d)
+            })
+        })
     })
+    return controls
 }
