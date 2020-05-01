@@ -32,6 +32,11 @@ const controlSettings = [
                 label: "Distrubtion of Cells", id: "cellDistribution", minVal: 1, maxVal: 25, value: 5, step: 1, update: () => {
                     resetCells();
                 }
+            },
+            {
+                label: "Cell Scaling", id: "cellScaling", minVal: -10, maxVal: 10, value: 1, step: .05, update: () => {
+                    redraw();
+                }
             }
         ]
     }
