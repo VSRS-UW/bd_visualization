@@ -6,19 +6,24 @@ let growthFrames = 300;
 // Voronoi
 let maxCellSpread = 200;
 let minCells = 2;
-let maxCells = 300;
+let maxCells = 200;
 let spreadSpeed = 1;
 var cells = [];
 var propogateProb = 0.02;
 
-// Perlin noise
+// Perlin Noise
 let radiusDivisions = 2000;
 let perlinVariability = 50;
 let startingRadius = 1;
 let minRadiusAddition = 0;
 let maxRadiusAddition = 1.5;
+var previousCenters = [[]];
+var previousLobes = [[]];
 var previousRadius = [];
 
+// propogate Location
+var propX = 700/2;
+var propY = 600/2;
 
 function setup() {
   // sets up canvas, voronoi settings, and points
@@ -38,43 +43,57 @@ function setup() {
   voronoi(700, 600, true);
   // sets initial radius of perlin noise loop to 1
   for (let a=0; a<TWO_PI; a+=TWO_PI/radiusDivisions) {
-    previousRadius.push(1)
-  }
+    previousLobes[0].push(1);
+  };
+  previousCenters[0] = [width/2, height/2];
+}
+
+function mouseClicked() {
+  propX = mouseX;
+  propY = mouseY;
+  var newLobe = [];
+  for (let a=0; a<TWO_PI; a+=TWO_PI/radiusDivisions) {
+    newLobe.push(1)
+  };
+  previousLobes.push(newLobe);
+  previousCenters.push([propX, propY]);
 }
 
 function draw() {
-  // draws for each frame
   background(255);
-  stroke(255);
+  stroke('rgba(100,100,100,1)');
   fill('rgba(100,100,100,1)');
   // perlin noise loop for outer shape
-  beginShape();
-  for (let a = 0; a < TWO_PI; a += TWO_PI/radiusDivisions) {
-    var r = previousRadius[Math.round(a/(TWO_PI/radiusDivisions), 1)];
-    // only grow during growth frames
-    if (absoluteFrame < growthFrames) {
-        let xoff = map(cos(a), -1, 1, 0, absoluteFrame/perlinVariability);
-        let yoff = map(sin(a), -1, 1, 0, absoluteFrame/perlinVariability);
-        let displayRadius = map(noise(xoff, yoff), 0, 1, minRadiusAddition, maxRadiusAddition);
-        r = displayRadius + previousRadius[Math.round(a/(TWO_PI/radiusDivisions), 1)];
+  for (lobe=0; lobe<previousLobes.length; lobe++) {
+    beginShape();
+    for (let a = 0; a < TWO_PI; a += TWO_PI/radiusDivisions) {
+      var r = previousLobes[lobe][Math.round(a/(TWO_PI/radiusDivisions), 1)];
+      // only grow during growth frames
+      if (absoluteFrame < growthFrames) {
+          let xoff = map(cos(a), -1, 1, 0, absoluteFrame/perlinVariability);
+          let yoff = map(sin(a), -1, 1, 0, absoluteFrame/perlinVariability);
+          let displayRadius = map(noise(xoff, yoff), 0, 1, minRadiusAddition, maxRadiusAddition);
+          r = displayRadius + previousLobes[lobe][Math.round(a/(TWO_PI/radiusDivisions), 1)];
+      }
+      let x = r * cos(a);
+      let y = r * sin(a);
+      previousLobes[lobe][Math.round(a/(TWO_PI/radiusDivisions), 1)] = r;
+      vertex(x + previousCenters[lobe][0], y + previousCenters[lobe][1]);
     }
-    let x = r * cos(a);
-    let y = r * sin(a);
-    previousRadius[Math.round(a/(TWO_PI/radiusDivisions), 1)] = r;
-    vertex(x + width/2, y + height/2)
-  }
-  endShape(CLOSE);
+  endShape(CLOSE);  
+  };
   // changes propogate probability to 0 once max cell number reached
   if (cells.length > maxCells) {
     propogateProb = 0;
-  }
+  };
   // below controls the propogation and diffusion of the cells
   // only occurs during growth frames
   if (absoluteFrame < growthFrames) {
       for (var walker=0; walker<cells.length; walker++) {
         // if cells propogates, generate new cell near center of lichen
         if (random(1) < propogateProb) {
-            cells.push([random(2)-1+width/2, random(2)-1+height/2])
+            let center = previousCenters[int(random(previousCenters.length))];
+            cells.push([random(2)-1+center[0], random(2)-1+center[1]])
         }
         // cells diffuse away from closest neighbor
         if (cells.length > 1) {
@@ -133,16 +152,16 @@ function draw() {
                 cells[walker][1] += yDirection/scale;
             }
             // limits cell diffusion to maxCellSpread
-            if (cells[walker][0] > width/2 + maxCellSpread) {
-                cells[walker][0] = width/2 + maxCellSpread;
-            } else if (cells[walker][0] < width/2 - maxCellSpread) {
-                cells[walker][0] = width/2 - maxCellSpread;
-            }
-            if (cells[walker][1] > height/2 + maxCellSpread) {
-                cells[walker][1] = height/2 + maxCellSpread;
-            } else if (cells[walker][1] < height/2 - maxCellSpread) {
-                cells[walker][1] = height/2 - maxCellSpread;
-            }
+            //if (cells[walker][0] > width/2 + maxCellSpread) {
+            //    cells[walker][0] = width/2 + maxCellSpread;
+            //} else if (cells[walker][0] < width/2 - maxCellSpread) {
+            //    cells[walker][0] = width/2 - maxCellSpread;
+            //}
+            //if (cells[walker][1] > height/2 + maxCellSpread) {
+            //    cells[walker][1] = height/2 + maxCellSpread;
+            //} else if (cells[walker][1] < height/2 - maxCellSpread) {
+            //    cells[walker][1] = height/2 - maxCellSpread;
+            //}
         }
       }
   }
