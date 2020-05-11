@@ -54,11 +54,18 @@ function draw() {
     let vals = {};
     controls.map(d => vals[d.id] = d.control.value());
     // draws for each frame
-    background(255);
+    background('rgba(100,100,100,1)');
+    // draw voronoi
+    voronoiDraw(0, 0, false, true);
+    fill(255);
     stroke(255, 255, 255);
-    fill('rgba(100,100,100,1)');
     // perlin noise loop for outer shape
     beginShape();
+    vertex(0, 0);
+    vertex(0, height);
+    vertex(width, height);
+    vertex(width, 0);
+    beginContour();
     for (let a = 0; a < TWO_PI; a += TWO_PI / vals.radiusDivisions) {
         // loops through angles of circle
         let xoff = map(cos(a), -1, 1, 0, vals.minRadius / vals.perlinVariability);
@@ -70,8 +77,7 @@ function draw() {
         // adds new vertex to the circle at mapped radius
         vertex(x + width / 2, y + height / 2)
     }
-    endShape(CLOSE);
-    // draw voronoi
-    voronoiDraw(0, 0, false, true);
+    endContour(CLOSE);
+    endShape();
 }
 

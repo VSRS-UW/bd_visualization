@@ -19,7 +19,6 @@ let minRadiusAddition = 0;
 let maxRadiusAddition = 1.5;
 var previousCenters = [[]];
 var previousLobes = [[]];
-var previousRadius = [];
 
 // propogate Location
 var propX = 700/2;
@@ -31,7 +30,7 @@ function setup() {
   // set up voronoi settings
   voronoiCellStrokeWeight(1);
   voronoiSiteStrokeWeight(3);
-  voronoiCellStroke(255);
+  voronoiCellStroke(0);
   voronoiSiteStroke(255);
   voronoiSiteFlag(false);
   // create center points of starting cells
@@ -60,28 +59,7 @@ function mouseClicked() {
 }
 
 function draw() {
-  background(255);
-  stroke('rgba(100,100,100,1)');
-  fill('rgba(100,100,100,1)');
-  // perlin noise loop for outer shape
-  for (lobe=0; lobe<previousLobes.length; lobe++) {
-    beginShape();
-    for (let a = 0; a < TWO_PI; a += TWO_PI/radiusDivisions) {
-      var r = previousLobes[lobe][Math.round(a/(TWO_PI/radiusDivisions), 1)];
-      // only grow during growth frames
-      if (absoluteFrame < growthFrames) {
-          let xoff = map(cos(a), -1, 1, 0, absoluteFrame/perlinVariability);
-          let yoff = map(sin(a), -1, 1, 0, absoluteFrame/perlinVariability);
-          let displayRadius = map(noise(xoff, yoff), 0, 1, minRadiusAddition, maxRadiusAddition);
-          r = displayRadius + previousLobes[lobe][Math.round(a/(TWO_PI/radiusDivisions), 1)];
-      }
-      let x = r * cos(a);
-      let y = r * sin(a);
-      previousLobes[lobe][Math.round(a/(TWO_PI/radiusDivisions), 1)] = r;
-      vertex(x + previousCenters[lobe][0], y + previousCenters[lobe][1]);
-    }
-  endShape(CLOSE);  
-  };
+  background('rgba(100,100,100,1)');
   // changes propogate probability to 0 once max cell number reached
   if (cells.length > maxCells) {
     propogateProb = 0;
@@ -169,5 +147,34 @@ function draw() {
   voronoiSites(cells);
   voronoi(700, 600, true);
   voronoiDraw(0, 0, false, false);
+  
+  
+  stroke(255);
+  fill(255);
+  // perlin noise loop for outer shape
+  beginShape();
+  vertex(0, 0);
+  vertex(0, height);
+  vertex(width, height);
+  vertex(width, 0);
+  for (lobe=0; lobe<previousLobes.length; lobe++) {
+    beginContour();
+    for (let a = 0; a < TWO_PI; a += TWO_PI/radiusDivisions) {
+      var r = previousLobes[lobe][Math.round(a/(TWO_PI/radiusDivisions), 1)];
+      // only grow during growth frames
+      if (absoluteFrame < growthFrames) {
+          let xoff = map(cos(a), -1, 1, 0, absoluteFrame/perlinVariability);
+          let yoff = map(sin(a), -1, 1, 0, absoluteFrame/perlinVariability);
+          let displayRadius = map(noise(xoff, yoff), 0, 1, minRadiusAddition, maxRadiusAddition);
+          r = displayRadius + previousLobes[lobe][Math.round(a/(TWO_PI/radiusDivisions), 1)];
+      }
+      let x = r * cos(a);
+      let y = r * sin(a);
+      previousLobes[lobe][Math.round(a/(TWO_PI/radiusDivisions), 1)] = r;
+      vertex(x + previousCenters[lobe][0], y + previousCenters[lobe][1]);
+    }
+    endContour(CLOSE);  
+  };
+  endShape(CLOSE);
   absoluteFrame++;
 }
