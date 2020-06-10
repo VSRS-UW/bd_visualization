@@ -1,0 +1,68 @@
+/* Main Styles */
+@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
+
+body {
+    font-family: sans-serif;
+    box-sizing: border-box;    
+}
+
+header h1, header p {
+    background-color:rgb(216, 60, 95);
+    color:white;
+    padding-left:20px;
+}
+
+header h1 {
+    font-weight: 100;
+    font-size: 2.5em;
+    margin-bottom: 0; 
+}
+
+h2 {
+    font-weight:100;
+}
+
+.p5_canvas {
+    border: 1px solid #d3d3d3;
+    margin: 20px;
+}
+
+.container {
+    max-width: inherit;
+}
+
+
+
+/* Control styles */
+.slider, .color-picker{
+    color:#898787;
+}
+
+input {
+    cursor: pointer;
+}
+.button-wrapper {
+    display: inline-block;
+}
+
+
+div.color-picker {
+    margin-bottom:4px;
+}
+
+#control-wrapper {
+    float: left;
+    padding:20px;    
+}
+
+button.btn {
+    width: 95px;
+    padding: 5px;
+    margin: 2px;
+    background-color:rgb(232, 138, 159);
+    cursor:pointer;
+}
+
+#control-wrapper a {
+    color:inherit;
+}

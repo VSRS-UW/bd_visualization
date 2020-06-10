@@ -1,5 +1,6 @@
 var cells = [];
 let controls = []; // define this globally
+let c1;
 
 function randomG(v, range) {
     // approximates gaussian distribution by averaging repeated random numbers
@@ -37,7 +38,8 @@ function preload() {
 
 function setup() {
     // sets up canvas, voronoi settings, and points
-    createCanvas(700, 600);
+    c1 = createCanvas(700, 600);
+    c1.position(200, 0);
     // set up voronoi settings
     voronoiCellStrokeWeight(1);
     voronoiSiteStrokeWeight(3);
@@ -81,4 +83,5 @@ function draw() {
     background('rgba(100, 100, 100, 1)');
     voronoiDraw(0, 0, false, true);
 }
+
 

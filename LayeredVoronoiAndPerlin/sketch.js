@@ -30,11 +30,6 @@ function resetCells() {
     voronoi(700, 600, true);
 }
 
-function preload() {
-    // Make controls
-    controls = makeControls()
-}
-
 function setup() {
     // sets up canvas, voronoi settings, and points
     createCanvas(700, 600);
@@ -45,21 +40,32 @@ function setup() {
     voronoiSiteStroke(255);
     voronoiSiteFlag(false);
 
+    // Make controls
+    controls = makeControls()
+
     // Reset the cell values
-    resetCells();
+    resetCells()
+
+
 }
 
-function resetCanvas() {
-    createCanvas(700, 600);
-} 
-
 function draw() {
-
     // Get values from controls:
     let vals = {};
     controls.map(d => vals[d.id] = d.control.value());
-    
-    drawingContext.beginPath();
+    // draws for each frame
+    background('rgba(100,100,100,1)');
+    // draw voronoi
+    voronoiDraw(0, 0, false, true);
+    fill(255);
+    stroke(255, 255, 255);
+    // perlin noise loop for outer shape
+    beginShape();
+    vertex(0, 0);
+    vertex(0, height);
+    vertex(width, height);
+    vertex(width, 0);
+    beginContour();
     for (let a = 0; a < TWO_PI; a += TWO_PI / vals.radiusDivisions) {
         // loops through angles of circle
         let xoff = map(cos(a), -1, 1, 0, vals.minRadius / vals.perlinVariability);
@@ -69,16 +75,9 @@ function draw() {
         let x = radius * cos(a);
         let y = radius * sin(a);
         // adds new vertex to the circle at mapped radius
-        if (a == 0) {
-            drawingContext.moveTo(x + width / 2, y + height / 2);
-        } else {
-            drawingContext.lineTo(x + width / 2, y + height / 2);   
-        }
+        vertex(x + width / 2, y + height / 2)
     }
-    drawingContext.clip();
-
-    // draws for each frame
-    background('rgba(100, 100, 100, 1)');
-    voronoiDraw(0, 0, false, true);
+    endContour(CLOSE);
+    endShape();
 }
 

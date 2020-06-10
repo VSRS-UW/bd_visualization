@@ -120,7 +120,7 @@ const VOR_CELLDRAW_SITE = 3;
 			if(newSites[i][2] !== undefined)
 				cellColors.push([newSites[i][0],newSites[i][1],newSites[i][2]]);
 			else
-				cellColors.push([newSites[i][0],newSites[i][1],color(random(0,255),random(0,255),random(0,255))]);
+				cellColors.push([newSites[i][0],newSites[i][1],this.color(this.random(0,255),this.random(0,255),this.random(0,255))]);
 			}
 	}
 
@@ -541,28 +541,28 @@ const VOR_CELLDRAW_SITE = 3;
 			}
 		}
 
-		push();
+		this.push();
 
 		//Draw Frame only
 		if(!fill)
-			noFill();
+			this.noFill();
 
 		//Render Cells
 		for (var i = 0; i < target.length; i++) {
 
-			strokeWeight(cellStrokeWeight);
-			stroke(cellStroke);
+			this.strokeWeight(cellStrokeWeight);
+			this.stroke(cellStroke);
 
 			//Load Color
 			if(fill)
 				setFillColorCell(i);
 
 			//Shape
-			beginShape();
+			this.beginShape();
 			for (var j = 0; j < target[i].length; j++) {
-				vertex(target[i][j][0] + x, target[i][j][1] + y);
+				this.vertex(target[i][j][0] + x, target[i][j][1] + y);
 			}
-			endShape(CLOSE);
+			this.endShape(this.CLOSE);
 
 			//Render Site
 			if(drawSites){
@@ -574,7 +574,7 @@ const VOR_CELLDRAW_SITE = 3;
 			}
 		}
 
-		pop();
+		this.pop();
 
 	}
 

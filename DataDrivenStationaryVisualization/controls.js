@@ -2,23 +2,19 @@
 // Settings for the controls we'll build
 const controlSettings = [
     {
-        label: "Minimum Radius", id: "minRadius", minVal: 2, maxVal: 200, value: 100, step: 1, update: () => { 
-            resetCanvas();
-        }
+        label: "Minimum Radius", id: "minRadius", minVal: 2, maxVal: 200, value: 100, step: 1, update: () => { }
     },
     {
-        label: "Maximum Radius", id: "maxRadius", minVal: 200, maxVal: 500, value: 350, step: 1, update: () => { 
-            resetCanvas();
-        }
+        label: "Maximum Radius", id: "maxRadius", minVal: 200, maxVal: 500, value: 350, step: 1, update: () => { }
     },
     {
         label: "Radius Divisions", id: "radiusDivisions", minVal: 3, maxVal: 2000, value: 100, step: 1, update: () => {
-            resetCanvas();
+            clear();
         }
     },
     {
         label: "Perlin Variablility", id: "perlinVariability", minVal: 1, maxVal: 100, value: 25, step: 1, update: () => {
-            resetCanvas();
+            clear();
         }
     },
     {
@@ -35,7 +31,7 @@ const controlSettings = [
 
 
 // Function to make a slider
-function makeSlider(options = { label: "Label", minVal: 0, maxVal: 50, value: 10, step: 1, parent: createDiv(), update: () => {} }) {
+function makeSlider(options = { label: "Label", minVal: 0, maxVal: 50, value: 10, step: 1, parent: createDiv(), update: () => { } }) {
     let wrapper = createDiv(options.label);
     wrapper.parent(options.parent);
     wrapper.class("slider");
