@@ -30,6 +30,16 @@ const controlSettings = [
         label: "Distrubtion of Cells", id: "cellDistribution", minVal: 1, maxVal: 25, value: 5, step: 1, update: () => {
             resetCells();
         }
+    },
+    {
+        label: "Horizontal Bias", id: "hBias", minVal: -100, maxVal: 100, value: 0, step: 10, update: () => {
+            resetCells();
+        }
+    },
+    {
+        label: "Vertical Bias", id: "vBias", minVal: -100, maxVal: 100, value: 0, step: 10, update: () => {
+            resetCells();
+        }
     }
 ];
 

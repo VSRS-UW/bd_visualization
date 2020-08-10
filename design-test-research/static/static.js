@@ -1,5 +1,6 @@
 var cells = [];
 let controls = []; // define this globally
+let vals = {};
 
 function randomG(v, range) {
     // approximates gaussian distribution by averaging repeated random numbers
@@ -22,7 +23,7 @@ function resetCells() {
     // create center points of cells
 
     for (var cell = 0; cell < numCells; cell++) {
-        cells.push([int(randomG(cellDist, width)), int(randomG(cellDist, height))]);
+        cells.push([int(randomG(cellDist, width))+vals.hBias, int(randomG(cellDist, height))+vals.vBias]);
     }
 
     // pass center points to voronoi
@@ -45,6 +46,8 @@ function setup() {
     voronoiSiteStroke(255);
     voronoiSiteFlag(false);
 
+    controls.map(d => vals[d.id] = d.control.value());
+
     // Reset the cell values
     resetCells();
 }
@@ -56,7 +59,6 @@ function resetCanvas() {
 function draw() {
 
     // Get values from controls:
-    let vals = {};
     controls.map(d => vals[d.id] = d.control.value());
     
     drawingContext.beginPath();
