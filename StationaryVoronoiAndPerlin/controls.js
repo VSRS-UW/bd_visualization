@@ -27,7 +27,7 @@ const controlSettings = [
         }
     },
     {
-        label: "Distrubtion of Cells", id: "cellDistribution", minVal: 1, maxVal: 25, value: 5, step: 1, update: () => {
+        label: "Distribution of Cells", id: "cellDistribution", minVal: 1, maxVal: 25, value: 5, step: 1, update: () => {
             resetCells();
         }
     }
