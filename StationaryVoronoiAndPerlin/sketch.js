@@ -60,7 +60,7 @@ function draw() {
     controls.map(d => vals[d.id] = d.control.value());
     
     drawingContext.beginPath();
-    for (let a = 0; a < TWO_PI; a += TWO_PI / vals.radiusDivisions) {
+    for (let a = 0; a < TWO_PI; a += TWO_PI / 100) {
         // loops through angles of circle
         let xoff = map(cos(a), -1, 1, 0, vals.minRadius / vals.perlinVariability);
         let yoff = map(sin(a), -1, 1, 0, vals.minRadius / vals.perlinVariability);
@@ -78,7 +78,7 @@ function draw() {
     drawingContext.clip();
 
     // draws for each frame
-    background('rgba(100, 100, 100, 1)');
+    background('rgba(47, 108, 38, 1)');
     voronoiDraw(0, 0, false, true);
 }
 

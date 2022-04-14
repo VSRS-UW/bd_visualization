@@ -2,32 +2,27 @@
 // Settings for the controls we'll build
 const controlSettings = [
     {
-        label: "Minimum Radius", id: "minRadius", minVal: 2, maxVal: 200, value: 100, step: 1, update: () => { 
+        label: "Min Energy Level", id: "minRadius", minVal: 2, maxVal: 200, value: 100, step: 1, update: () => { 
             resetCanvas();
         }
     },
     {
-        label: "Maximum Radius", id: "maxRadius", minVal: 200, maxVal: 500, value: 350, step: 1, update: () => { 
+        label: "Max Energy Level", id: "maxRadius", minVal: 200, maxVal: 500, value: 350, step: 1, update: () => { 
             resetCanvas();
         }
     },
     {
-        label: "Radius Divisions", id: "radiusDivisions", minVal: 3, maxVal: 2000, value: 100, step: 1, update: () => {
+        label: "Sleep", id: "perlinVariability", minVal: 1, maxVal: 100, value: 25, step: 1, update: () => {
             resetCanvas();
         }
     },
     {
-        label: "Perlin Variablility", id: "perlinVariability", minVal: 1, maxVal: 100, value: 25, step: 1, update: () => {
-            resetCanvas();
-        }
-    },
-    {
-        label: "Number of Cells", id: "numberOfCells", minVal: 1, maxVal: 400, value: 100, step: 1, update: () => {
+        label: "Mood", id: "numberOfCells", minVal: 1, maxVal: 400, value: 100, step: 1, update: () => {
             resetCells();
         }
     },
     {
-        label: "Distribution of Cells", id: "cellDistribution", minVal: 1, maxVal: 25, value: 5, step: 1, update: () => {
+        label: "Engagement", id: "cellDistribution", minVal: 1, maxVal: 25, value: 5, step: 1, update: () => {
             resetCells();
         }
     }
